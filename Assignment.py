@@ -1,11 +1,10 @@
 import sqlite3
+file = 'dbase.db'
+connection = sqlite3.connect(file)
+print(connection)
+cursor = connection.cursor()
 class veterinize:
-    file = 'dbase.db'
-    connection = sqlite3.connect(file)
-    print(connection)
-    cursor = connection.cursor()
     def createTables():
-
         query = """
         create table if not exists customers (
             Uid integer primary key autoincrement,
@@ -44,7 +43,7 @@ class veterinize:
     def program(): 
         end = False
         while end == False:
-            option = input("\nWhat would you like to do?\nExit: 0\nAdd new customer: 1\nSearch for a customer: 2\n")
+            option = input("\nWhat would you like to do?\nExit: 0\nAdd new customer: 1\nSearch for a customer: 2\nEdit exitsing customer info: 3\n")
             if option == "0":
                 end = True
             elif option == "1":
@@ -70,5 +69,17 @@ class veterinize:
                     print(cursor.fetchall())
                 else:
                     print("That is not a valid input.")
-            else: 
+            elif option == "3":
+                id = int(input("Enter Uid of the customer whose info you would like to edit: "))
+                if id >= 1:
+                    cursor.execute(f"select * from customers where Uid ='{id}'")
+                    print(cursor.fetchall())
+                else:
+                    print("That is not a valid input.")
+            else:
                 print("That is not a valid input.")
+
+
+run = veterinize()
+run.createTables()
+run.program()
