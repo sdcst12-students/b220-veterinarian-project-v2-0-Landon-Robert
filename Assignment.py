@@ -39,10 +39,10 @@ class veterinize:
             paid float(16,2));
         """
         cursor.execute(q3)
-
-    def program(): 
+    def program():
         end = False
         while end == False:
+            t = False
             option = input("\nWhat would you like to do?\nExit: 0\nAdd new customer: 1\nSearch for a customer: 2\nEdit exitsing customer info: 3\n")
             if option == "0":
                 end = True
@@ -74,12 +74,32 @@ class veterinize:
                 if id >= 1:
                     cursor.execute(f"select * from customers where Uid ='{id}'")
                     print(cursor.fetchall())
+                    while t == False:
+                        changeType = input("What information would you like to change?\nFirst Name: 1\nLast Name: 2\nPhone Number: 3\nEmail: 4\nAddress: 5\nCity: 6\nPostal Code: 7\nExit: 0\n")
+                        changedInfo = input("Please enter appropriate updated information: ")
+                        if changeType == "0":
+                            t = True
+                        elif changeType == "1":
+                            cursor.execute(f"update customers set fname={changedInfo} where id={id}")
+                        elif changeType == "2":
+                            cursor.execute(f"update customers set lname={changedInfo} where id={id}")
+                        elif changeType == "3":
+                            cursor.execute(f"update customers set phone={int(changedInfo)} where id={id}")
+                        elif changeType == "4":
+                            
+                        elif changeType == "5":
+
+                        elif changeType == "6":
+
+                        elif changeType == "7":
+
+                        else: 
+                            print("That is not a valid input.")
                 else:
                     print("That is not a valid input.")
             else:
                 print("That is not a valid input.")
-
-
+connection.commit()
 run = veterinize()
 run.createTables()
 run.program()
