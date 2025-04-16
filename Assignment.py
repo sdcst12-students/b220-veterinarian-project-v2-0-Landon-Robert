@@ -1,10 +1,10 @@
 import sqlite3
-file = 'dbase.db'
+file = 'veterinise.db'
 connection = sqlite3.connect(file)
 print(connection)
-cursor = connection.cursor()
+cursor = connection.cursor() 
 class veterinize:
-    def createTables():
+    def createTables(self):
         query = """
         create table if not exists customers (
             Uid integer primary key autoincrement,
@@ -39,7 +39,7 @@ class veterinize:
             paid float(16,2));
         """
         cursor.execute(q3)
-    def program():
+    def program(self):
         end = False
         while end == False:
             t = False
@@ -51,10 +51,10 @@ class veterinize:
                 fname = input("First Name: ")
                 lname = input("Last Name: ")
                 phone = int(input("Phone Number (no spaces): "))
-                email = input("Email:")
+                email = input("Email: ")
                 address = input("Address: ")
                 city = input("City: ")
-                postalcode = input("Postal Code: ")
+                postalcode = input("Postal Code: \n")
                 query = f"insert into customers (fname,lname,phone,email,address,city,postalcode) values ('{fname}','{lname}','{phone}','{email}','{address}','{city}','{postalcode}');"
                 print(query)
                 cursor.execute(query)
@@ -80,26 +80,26 @@ class veterinize:
                         if changeType == "0":
                             t = True
                         elif changeType == "1":
-                            cursor.execute(f"update customers set fname={changedInfo} where id={id}")
+                            cursor.execute(f"update customers set fname={changedInfo} where Uid={id}")
                         elif changeType == "2":
-                            cursor.execute(f"update customers set lname={changedInfo} where id={id}")
+                            cursor.execute(f"update customers set lname={changedInfo} where Uid={id}")
                         elif changeType == "3":
-                            cursor.execute(f"update customers set phone={int(changedInfo)} where id={id}")
+                            cursor.execute(f"update customers set phone={changedInfo} where Uid={id}")
                         elif changeType == "4":
-                            
+                            cursor.execute(f"update customers set email={changedInfo} where Uid={id}")
                         elif changeType == "5":
-
+                            cursor.execute(f"update customers set address={changedInfo} where Uid={id}")
                         elif changeType == "6":
-
+                            cursor.execute(f"update customers set city={changedInfo} where Uid={id}")
                         elif changeType == "7":
-
+                            cursor.execute(f"update customers set postalcode={changedInfo} where Uid={id}")
                         else: 
                             print("That is not a valid input.")
                 else:
                     print("That is not a valid input.")
             else:
                 print("That is not a valid input.")
-connection.commit()
 run = veterinize()
 run.createTables()
 run.program()
+connection.commit()
