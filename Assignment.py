@@ -40,10 +40,12 @@ class veterinize:
         """
         cursor.execute(q3)
     def program(self):
+        print("-"*20)
         end = False
+
         while end == False:
             t = False
-            option = input("\nWhat would you like to do?\nExit: 0\nAdd new customer: 1\nSearch for a customer: 2\nEdit exitsing customer info: 3\n> ")
+            option = input("What would you like to do?\nExit: 0\nAdd new customer: 1\nSearch for a customer: 2\nEdit exitsing customer info: 3\n> ")
             if option == "0":
                 end = True
             elif option == "1":
@@ -62,41 +64,43 @@ class veterinize:
                 connection.commit()
             elif option == "2":
                 userInfo = ["Uid", "fname", "lname", "phone", "email", "address", "city", "postalcode"]
-                decision = int(input("Search for existing customer by:\nUid: 1\nFirst Name: 2\nLast Name: 3\nPhone Number: 4\nEmail: 5\nAddress: 6\nCity: 7\nPostal Code: 8\nExit: 0\n"))
+                decision = int(input("\nSearch for existing customer by:\nUid: 1\nFirst Name: 2\nLast Name: 3\nPhone Number: 4\nEmail: 5\nAddress: 6\nCity: 7\nPostal Code: 8\nExit: 0\n> "))
                 if int(decision) == 0:
                     end = True
                 elif 1 <= int(decision) <= 8:
-                    Uinfo = input("Please enter the corresponding info (ex. if you chose name, enter name): ")
+                    Uinfo = input("Please enter the corresponding info (ex. if you chose name, enter name):\n> ")
                     cursor.execute(f"select * from customers where {userInfo[decision-1]}='{Uinfo}'")
                     print(cursor.fetchall())
                 else:
                     print("That is not a valid input.")
             elif option == "3":
+                userInfo = ["Uid", "fname", "lname", "phone", "email", "address", "city", "postalcode"]
                 id = int(input("Enter Uid of the customer whose info you would like to edit: "))
                 if id >= 1:
-                    cursor.execute(f"select * from customers where Uid ='{id}'")
-                    print(cursor.fetchall())
                     while t == False:
-                        changeType = input("What information would you like to change?\nFirst Name: 1\nLast Name: 2\nPhone Number: 3\nEmail: 4\nAddress: 5\nCity: 6\nPostal Code: 7\nExit: 0\n")
-                        changedInfo = input("Please enter appropriate updated information: ")
-                        if changeType == "0":
+                        cursor.execute(f"select * from customers where Uid ='{id}'")
+                        print(cursor.fetchall())
+                        changeType = input("What information would you like to change?\nFirst Name: 1\nLast Name: 2\nPhone Number: 3\nEmail: 4\nAddress: 5\nCity: 6\nPostal Code: 7\nExit: 0\n> ")
+                        if str(changeType) == "0":
                             t = True
-                        elif changeType == "1":
-                            cursor.execute(f"update customers set fname='{changedInfo} where Uid='{id}'")
+                        changedInfo = input("Please enter appropriate updated information: ")
+                        if changeType == "1":
+                            cursor.execute(f"update customers set fname='{changedInfo}' where Uid='{id}'")
                         elif changeType == "2":
-                            cursor.execute(f"update customers set lname={changedInfo} where Uid='{id}'")
+                            cursor.execute(f"update customers set lname='{changedInfo}' where Uid='{id}'")
                         elif changeType == "3":
-                            cursor.execute(f"update customers set phone={changedInfo} where Uid='{id}'")
+                            cursor.execute(f"update customers set phone='{changedInfo}' where Uid='{id}'")
                         elif changeType == "4":
-                            cursor.execute(f"update customers set email={changedInfo} where Uid='{id}'")
+                            cursor.execute(f"update customers set email='{changedInfo}' where Uid='{id}'")
                         elif changeType == "5":
-                            cursor.execute(f"update customers set address={changedInfo} where Uid='{id}'")
+                            cursor.execute(f"update customers set address='{changedInfo}' where Uid='{id}'")
                         elif changeType == "6":
-                            cursor.execute(f"update customers set city={changedInfo} where Uid='{id}'")
+                            cursor.execute(f"update customers set city='{changedInfo}' where Uid='{id}'")
                         elif changeType == "7":
-                            cursor.execute(f"update customers set postalcode={changedInfo} where Uid='{id}'")
+                            cursor.execute(f"update customers set postalcode='{changedInfo}' where Uid='{id}'")
                         else: 
                             print("That is not a valid input.")
+                        connection.commit()
                 else:
                     print("That is not a valid input.")
             else:
