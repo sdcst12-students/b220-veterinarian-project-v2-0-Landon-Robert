@@ -43,7 +43,7 @@ class veterinize:
         print("="*34)
         end = False
         while end == False:
-            option = input("What would you like to do?\nExit --------------------------- 0\nAdd new customer --------------- 1\nSearch for a customer ---------- 2\nEdit exitsing customer info ---- 3\n> ")
+            option = input("What would you like to do?\nExit --------------------------- 0\nAdd new customer --------------- 1\nSearch for a customer ---------- 2\nEdit existing customer info ---- 3\n> ")
             if option == "0":
                 end = True
             elif option == "1":
@@ -56,14 +56,13 @@ class veterinize:
                 city = input("City: ")
                 postalcode = input("Postal Code: ")
                 query = f"insert into customers (fname,lname,phone,email,address,city,postalcode) values ('{fname}','{lname}','{phone}','{email}','{address}','{city}','{postalcode}');"
-                print(query)
                 print("Customer added")
                 cursor.execute(query)
                 connection.commit()
             elif option == "2":
                 print("-"*34)
                 userInfo = ["Uid", "fname", "lname", "phone", "email", "address", "city", "postalcode"]
-                decision = int(input("\nSearch for existing customer by:\nUid ---------------------------- 1\nFirst Name --------------------- 2\nLast Name ---------------------- 3\nPhone Number ------------------- 4\nEmail -------------------------- 5\nAddress ------------------------ 6\nCity --------------------------- 7\nPostal Code -------------------- 8\nExit --------------------------- 0\n> "))
+                decision = int(input("Search for existing customer by:\nUid ---------------------------- 1\nFirst Name --------------------- 2\nLast Name ---------------------- 3\nPhone Number ------------------- 4\nEmail -------------------------- 5\nAddress ------------------------ 6\nCity --------------------------- 7\nPostal Code -------------------- 8\nExit --------------------------- 0\n> "))
                 if int(decision) == 0:
                     end = True
                 elif 1 <= int(decision) <= 8:
@@ -96,3 +95,5 @@ class veterinize:
 run = veterinize()
 run.createTables()
 run.program()
+print("="*34)
+
